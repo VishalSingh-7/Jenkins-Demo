@@ -1,12 +1,9 @@
 pipeline {
     agent any
-    environment {
-        name = 'gaurav'
-    }
     parameters {
-        string(name: 'person', defaultValue: 'Saurav Sharma', description: "Who are you?")
-        booleanParam(name: 'isMale', defaultValue: true, description: "")
-        choice(name: 'City', choices: ['Jaipur','Mumbai','Pune' ], description: "")
+        string(name: 'Service_Name', defaultValue: 'AI Service', description: "Enter your Service Name")
+        booleanParam(name: 'New_Service', defaultValue: true, description: "")
+        choice(name: 'Environment', choices: ['Dev','QA','Staging','Prod' ], description: "")
     }
     stages {
         stage('Run A command') {
@@ -15,7 +12,6 @@ pipeline {
                 ls
                 date
                 pwd
-                cal 2021
                 '''
                 
             }
@@ -26,15 +22,15 @@ pipeline {
             }
             steps {
                 sh 'echo  "${BUILD_ID}"'
-                sh 'echo  "${name}"'
+                sh 'echo  "${Service_Name}"'
                 sh 'echo  "${username}"'
             }
         }
         stage('Parameters') {
             steps {
                 echo 'deploy on test'
-                sh 'echo "${name}"'
-                sh 'echo  "${person}"'
+                sh 'echo "${Service_Name}"'
+                sh 'echo  "${New_Service}"'
             }
         }
         stage('Continue ?') {
@@ -44,12 +40,12 @@ pipeline {
             }
             
             steps {
-                echo 'deploy on prod'
+                echo 'Deploy on Prod.....'
             }
         }
-        stage('Deploy on prod') {
+        stage('Deploy on Prod') {
             steps {
-                echo 'deploy on prod'
+                echo 'Deploy on Prod......'
             }
         }
     }
